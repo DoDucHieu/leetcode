@@ -13,14 +13,20 @@ var candy = function(ratings) {
 
         if(i === 0 && currRate <= nextRate) obj[i] = 1
 
-        if(i === ratings.length - 1 && currRate < prevRate) obj[i] = 1
+        if(i === ratings.length - 1 && currRate <= prevRate && !obj[i-1]) obj[i] = 1
 
-        if(currRate < prevRate && currRate < nextRate) obj[i] = 1
+        if(currRate <= prevRate && currRate <= nextRate && !obj[i-1]) obj[i] = 1
     }
 
     console.log(obj);
+
+    for(let i = 0; i<ratings.length; i++){
+        if(obj[i]) arr.push(1)
+    }
+    console.log(arr);
+
 };
 
-const ratings = [1,2,2]
+const ratings = [2,2,2,2,2]
 const res = candy(ratings)
 console.log(res);
