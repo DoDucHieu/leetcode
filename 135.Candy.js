@@ -3,30 +3,18 @@
  * @return {number}
  */
 var candy = function(ratings) {
-    const arr = []
-    const obj = {}
+    const arr = new Array(ratings.length).fill(1); 
+    var total = 0
 
-    for(let i = 0; i < ratings.length; i++){
-        const prevRate = ratings[i - 1]
-        const nextRate = ratings[i + 1]
-        const currRate = ratings[i]
-
-        if(i === 0 && currRate <= nextRate) obj[i] = 1
-
-        if(i === ratings.length - 1 && currRate <= prevRate && !obj[i-1]) obj[i] = 1
-
-        if(currRate <= prevRate && currRate <= nextRate && !obj[i-1]) obj[i] = 1
+    for(let i = 1; i < ratings.length; i++){
+        if(ratings[i] > ratings[i - 1]) {
+            arr[i] = arr[i - 1] + 1
+        }
     }
 
-    console.log(obj);
-
-    for(let i = 0; i<ratings.length; i++){
-        if(obj[i]) arr.push(1)
+    for(let i = ratings.length - 1; i > 0; i--){
+        if(ratings[i - 1] > ratings[i]) arr[i - 1] = Math.max(arr[i - 1], arr[i] + 1)
+        total += arr[i - 1]
     }
-    console.log(arr);
-
+    return total + arr[ratings.length - 1]
 };
-
-const ratings = [2,2,2,2,2]
-const res = candy(ratings)
-console.log(res);
